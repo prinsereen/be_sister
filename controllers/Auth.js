@@ -2,17 +2,6 @@ import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt"
 import jwt  from "jsonwebtoken";
 
-export const getUsers = async(req, res) => {
-    try {
-        const users = await Users.findAll({
-            attributes: ['id', 'jenis_pengguna', 'nik']
-        });
-        res.json(users)
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 export const register = async(req, res) => {
     const {name, jenis_pengguna, nik, password, conf_password} = req.body;
     if(password !== conf_password) return res.status(400).json({msg: "password dan confirmation password tidak cocok"})
@@ -36,6 +25,7 @@ export const login = async(req, res) => {
         const user = await Users.findAll({
             where:{
                 nik: req.body.nik,
+                jenis_pengguna: req.body.jenis_pengguna
             }
         })
         const match = await bcrypt.compare(req.body.password, user[0].password);
@@ -64,4 +54,23 @@ export const login = async(req, res) => {
     } catch (error) {
         res.status(404).json({msg: "User Tidak Ditemukan"})
     }
+}
+
+export const logout = async(req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if(!refreshToken) return res.sendStatus(204);
+    const user = await Users.findAll({
+        where:{
+            refresh_token: refreshToken
+        }
+    });
+    if(!user[0]) return res.sendStatus(204);
+    const userId = user[0].id;
+    await Users.update({refresh_token: null},{
+        where:{
+            id: userId
+        }
+    });
+    res.clearCookie('refreshToken');
+    return res.sendStatus(200)
 }

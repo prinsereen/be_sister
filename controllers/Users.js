@@ -1,9 +1,12 @@
 import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt"
+import jwt  from "jsonwebtoken";
 
 export const getUsers = async(req, res) => {
     try {
-        const users = await Users.findAll();
+        const users = await Users.findAll({
+            attributes: ['id', 'jenis_pengguna', 'nik']
+        });
         res.json(users)
     } catch (error) {
         console.log(error)
@@ -25,5 +28,40 @@ export const register = async(req, res) => {
         res.status(200).json({msg: "Register Berhasil"})
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const login = async(req, res) => {
+    try {
+        const user = await Users.findAll({
+            where:{
+                nik: req.body.nik,
+            }
+        })
+        const match = await bcrypt.compare(req.body.password, user[0].password);
+        if(!match) return res.status(400).json({msg: "Wrong Password"})
+        const userId = user[0].id;
+        const name = user[0].name;
+        const jenis_pengguna = user[0].jenis_pengguna;
+        const nik = user[0].nik;
+
+        const accessToken = jwt.sign({userId, name, jenis_pengguna, nik}, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: '60s'
+        });
+        const refreshToken = jwt.sign({userId, name, jenis_pengguna, nik}, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: '1d'
+        });
+        await Users.update({refresh_token: refreshToken}, {
+            where: {
+                id: userId
+            }
+        });
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            maxAge: 24*60*1000
+        });
+        res.json({accessToken})
+    } catch (error) {
+        res.status(404).json({msg: "User Tidak Ditemukan"})
     }
 }

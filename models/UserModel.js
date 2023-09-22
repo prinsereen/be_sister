@@ -16,6 +16,30 @@ const Users = db.define('users', {
     password:{
         type: DataTypes.STRING
     },
+    riwayat_penyakit: {
+        type: DataTypes.TEXT
+    },
+    riwayat_alergi: {
+        type: DataTypes.TEXT
+    },
+    berat_badan: {
+        type: DataTypes.TEXT
+    },
+    tinggi_badan: {
+        type: DataTypes.TEXT
+    },
+    riwayat_penyakit: {
+        type: DataTypes.TEXT
+    },
+    tekanan_darah: {
+        type: DataTypes.TEXT
+    },
+    denyut_jantung: {
+        type: DataTypes.TEXT
+    },
+    catatan_tambahan: {
+        type: DataTypes.TEXT
+    },
     refresh_token: {
         type: DataTypes.TEXT
     }

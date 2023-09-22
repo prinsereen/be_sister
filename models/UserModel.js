@@ -9,6 +9,9 @@ const Users = db.define('users', {
     },
     jenis_pengguna:{
         type: DataTypes.STRING
+    },    
+    umur:{
+        type: DataTypes.STRING
     },
     nik:{
         type: DataTypes.STRING

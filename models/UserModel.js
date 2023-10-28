@@ -9,39 +9,18 @@ const Users = db.define('users', {
     },
     jenis_pengguna:{
         type: DataTypes.STRING
+    },
+    email:{
+        type: DataTypes.STRING
     },    
     umur:{
         type: DataTypes.STRING
     },
-    nik:{
-        type: DataTypes.STRING
-    },
     password:{
         type: DataTypes.STRING
-    },
-    riwayat_penyakit: {
-        type: DataTypes.TEXT
-    },
-    riwayat_alergi: {
-        type: DataTypes.TEXT
-    },
-    berat_badan: {
-        type: DataTypes.TEXT
-    },
-    tinggi_badan: {
-        type: DataTypes.TEXT
-    },
-    riwayat_penyakit: {
-        type: DataTypes.TEXT
-    },
-    tekanan_darah: {
-        type: DataTypes.TEXT
-    },
-    denyut_jantung: {
-        type: DataTypes.TEXT
-    },
-    catatan_tambahan: {
-        type: DataTypes.TEXT
+    },   
+    no_telp:{
+        type: DataTypes.STRING
     },
     refresh_token: {
         type: DataTypes.TEXT

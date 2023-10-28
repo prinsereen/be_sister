@@ -5,15 +5,11 @@ export const getAllUsers = async(req, res) => {
         const users = await Users.findAll({
             attributes: [
             'id', 
-            'jenis_pengguna', 
-            'nik',
-            'riwayat_penyakit',
-            'riwayat_alergi',
-            'berat_badan',
-            'tinggi_badan',
-            'tekanan_darah',
-            'denyut_jantung',
-            'catatan_tambahan'
+            'name',
+            'jenis_pengguna',
+            'umur',
+            'no_telp',
+            'email'
         ]
         });
         res.json(users)
@@ -27,15 +23,10 @@ export const getUserById = async(req, res) => {
         const user = await Users.findOne({
         attributes: [
             'id', 
-            'jenis_pengguna', 
-            'nik',
-            'riwayat_penyakit',
-            'riwayat_alergi',
-            'berat_badan',
-            'tinggi_badan',
-            'tekanan_darah',
-            'denyut_jantung',
-            'catatan_tambahan'
+            'name',
+            'jenis_pengguna',
+            'umur',
+            'no_telp'
         ], 
             where: {
                 id: req.params.id 

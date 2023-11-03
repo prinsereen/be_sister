@@ -18,9 +18,9 @@ export const refreshToken = async(req, res) => {
             const jenis_pengguna = user[0].jenis_pengguna;
             const nik = user[0].nik;
             const accessToken = jwt.sign({userId, name, jenis_pengguna, nik}, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: '60s'
+                expiresIn: '1d'
             });
-            res.json({accessToken})
+            res.json({token: accessToken})
         })
     } catch (error) {
         console.log(error)

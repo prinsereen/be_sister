@@ -1,6 +1,6 @@
 import {Sequelize} from "sequelize";
 
-const db = new Sequelize('database_visionary', 'root', '', {
+const db = new Sequelize('database_sister', 'root', '', {
     host: "localhost",
     dialect: "mysql",
 })

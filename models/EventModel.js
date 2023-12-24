@@ -3,30 +3,27 @@ import db from "../config/Database.js";
 
 const {DataTypes} = Sequelize;
 
-const Users = db.define('users', {
-    name:{
+const Event = db.define('event', {
+    tiket_id:{
         type: DataTypes.STRING
     },
-    jenis_pengguna:{
-        type: DataTypes.STRING
+    date:{
+        type: DataTypes.DATE
     },
-    email:{
+    agency:{
         type: DataTypes.STRING
     },    
-    umur:{
+    event_name:{
         type: DataTypes.STRING
-    },
-    password:{
+    },    
+    place:{
         type: DataTypes.STRING
-    },   
-    no_telp:{
+    },    
+    city:{
         type: DataTypes.STRING
-    },
-    refresh_token: {
-        type: DataTypes.TEXT
     }
 }, {
     freezeTableName: true
 })
 
-export default Users;
+export default Event;

@@ -5,12 +5,10 @@ export const getEvent = async (queryParams) => {
   try {
     const { agency, tiket_id } = queryParams;
 
-    if (!agency && !tiket_id) {throw new Error('isi params gan')}
-
     const result = await Event.findOne({
       where: {
-        ...(agency && { agency }),
-        ...(tiket_id && { tiket_id }),
+        agency,
+        tiket_id
       },
     });
 
